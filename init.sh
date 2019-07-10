@@ -20,4 +20,14 @@ sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/i
 echo "source ~/.bash_profile"" >> ~/.zshrc
 
 # Create SSH key
+cd ~/.ssh
 ssh-keygen -t rsa -b 4096
+eval "$(ssh-agent -s)"
+touch ~/.ssh/config
+
+echo "Host *
+  AddKeysToAgent yes
+  UseKeychain yes
+  IdentityFile ~/.ssh/key" >> ~/.ssh/config
+
+ssh-add -K ~/.ssh/key
