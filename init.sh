@@ -32,3 +32,7 @@ echo "Host *
   IdentityFile ~/.ssh/key" >> ~/.ssh/config
 
 ssh-add -K ~/.ssh/key
+
+# Display hidden files in finder
+defaults write com.apple.finder AppleShowAllFiles YES
+killall Finder
