@@ -4,6 +4,7 @@ touch ~/.bash_profile
 
 echo "export PATH=/usr/local/bin:$PATH" >> ~/.bash_profile
 echo "export MAIN_DEV_PATH=\"~/dev\"" >> ~/.bash_profile
+echo "alias gti='git'" >> ~/.bash_profile
 
 # Make the keyboard cursor faster
 defaults write NSGlobalDomain KeyRepeat -int 0
