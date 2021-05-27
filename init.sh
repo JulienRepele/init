@@ -1,15 +1,22 @@
+# Install Xcode (require for git)
+command xcode-select --install
+
+# Create dev directory
 cd ~
-mkdir dev
-touch ~/.bash_profile
+mkdir ~/dev
+cd ~/dev
 
-echo "export PATH=/usr/local/bin:$PATH" >> ~/.bash_profile
-echo "export MAIN_DEV_PATH=\"~/dev\"" >> ~/.bash_profile
-echo "alias gti='git'" >> ~/.bash_profile
-echo "alias lint='git ls-files -m | xargs ktlint'" >> ~/.bash_profile
+# Display hidden files
+defaults write com.apple.Finder AppleShowAllFiles true; killall Finder
+
+# Set acces right for Github SSH key
+chmod 400 ~/.ssh/id_rsa
+git clone git@github.com:JulienRepele/init.git
 
 
-# Make the keyboard cursor faster
-defaults write NSGlobalDomain KeyRepeat -int 0
+# Make the keyboard cursor faster (effective after system reboot)
+defaults write NSGlobalDomain KeyRepeat -int 1
+defaults write NSGlobalDomain InitialKeyRepeat -int 12
 
 # Configure git aliases
 git config --global alias.ci commit
@@ -19,23 +26,36 @@ git config --global alias.br branch
 git config --global alias.lg "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 git config --global core.editor "sublime -n -w"
 
+touch ~/.bash_profile
+echo "alias gti='git'" >> ~/.bash_profile
+
+
 # Install and configure OhMyZsh
-sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-echo "source ~/.bash_profile"" >> ~/.zshrc
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+touch ~/.bash_profile
+echo "source ~/.bash_profile">> ~/.zshrc
 
-# Create SSH key
-cd ~/.ssh
-ssh-keygen -t rsa -b 4096
-eval "$(ssh-agent -s)"
-touch ~/.ssh/config
+# Fix Folder permission issue with Oh My ZSH
+echo "$(echo -n 'ZSH_DISABLE_COMPFIX=true\n'; cat ~/.zshrc)" > ~/.zshrc
 
-echo "Host *
-  AddKeysToAgent yes
-  UseKeychain yes
-  IdentityFile ~/.ssh/key" >> ~/.ssh/config
+# Install Ktlint (Kotlin linter)
+curl -sSLO https://github.com/pinterest/ktlint/releases/download/0.41.0/ktlint && chmod a+x ktlint
+touch ~/.bash_profile
+echo "alias lint='git ls-files -m | xargs ktlint'" >> ~/.bash_profile
 
-ssh-add -K ~/.ssh/key
+# Install Homebrew
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-# Display hidden files in finder
-defaults write com.apple.finder AppleShowAllFiles YES
-killall Finder
+# Instal Sublime text and use it as git editor (instead of vim)
+brew install --cask sublime-text
+git config --global core.editor "subl -n -w"
+
+#Install popular softwares
+brew install --cask iterm2
+brew install --cask slack
+brew install --cask android-studio
+brew install --cask spotify
+brew install --cask intellij-idea-ce
+brew install --cask vlc
+brew install --cask transmission
+brew install --cask adobe-creative-cloud
