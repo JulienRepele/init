@@ -4,15 +4,12 @@ command xcode-select --install
 # Create dev directory
 cd ~
 mkdir ~/dev
-cd ~/dev
 
 # Display hidden files
 defaults write com.apple.Finder AppleShowAllFiles true; killall Finder
 
 # Set acces right for Github SSH key
-chmod 400 ~/.ssh/id_rsa
-git clone git@github.com:JulienRepele/init.git
-
+# chmod 400 ~/.ssh/id_rsa
 
 # Make the keyboard cursor faster (effective after system reboot)
 defaults write NSGlobalDomain KeyRepeat -int 1
