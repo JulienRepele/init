@@ -47,6 +47,7 @@ echo "alias lint='git ls-files -m | xargs ktlint'" >> ~/.bash_profile
 
 # Instal Sublime Text and use it as git editor (instead of vim)
 brew install --cask sublime-text
+sudo ln -s /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl /usr/local/bin/subl
 git config --global core.editor "subl -n -w"
 
 # Install popular softwares
